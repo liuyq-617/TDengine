@@ -24,7 +24,7 @@ def abortPreviousBuilds() {
       continue;
     }
 
-    build.abort()
+    build.doabort()
   }
 }
 //停止之前相同的分支sdfgsd
