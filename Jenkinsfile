@@ -24,7 +24,7 @@ def abortPreviousBuilds() {
       continue;
     }
 
-    build.doStop()
+    build.abort()
   }
 }
 //停止之前相同的分支sdfgsd
@@ -173,7 +173,12 @@ pipeline {
          agent{label "p2"}
          steps{
             pre_test()         
-            
+            sh '''
+            date
+            cd ${WKC}/tests
+            ./test-all.sh p2
+            date
+            '''
          }
        } 
         
