@@ -3,7 +3,7 @@ properties([pipelineTriggers([githubPush()])])
 node {
     git url: 'https://github.com/liuyq-617/TDengine.git'
 }
-
+//ddddd
 // execute this before anything else, including requesting any time on an agent test 
 // if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
 //   print "INFO: Build skipped due to trigger being Branch Indexing"
