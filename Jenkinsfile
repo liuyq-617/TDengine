@@ -47,6 +47,16 @@ pipeline {
   }
   
   stages {
+      stage('pre_build'){
+        when {
+              changeRequest()
+          }
+          agent{label 'p2'}
+          steps {
+            print("go")
+          }
+        }
+      }
     
       stage('Parallel test stage') {
       parallel {
