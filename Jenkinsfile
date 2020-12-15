@@ -73,16 +73,6 @@ pipeline {
   }
   
   stages {
-      stage('pre_build'){
-        when {
-              changeRequest()
-          }
-          agent{label 'p2'}
-          steps {
-            
-            print("go")
-          }
-        }
       
     
       stage('Parallel test stage') {
@@ -174,12 +164,12 @@ pipeline {
          agent{label "p2"}
          steps{
             pre_test()         
-            sh '''
-            date
-            cd ${WKC}/tests
-            ./test-all.sh p2
-            date
-            '''
+            // sh '''
+            // date
+            // cd ${WKC}/tests
+            // ./test-all.sh p2
+            // date
+            // '''
          }
        } 
         
