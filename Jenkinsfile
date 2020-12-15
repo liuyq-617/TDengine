@@ -5,10 +5,7 @@ node {
     git url: 'https://github.com/liuyq-617/TDengine.git'
 }
 
-// milestone to stop previous build
-// def buildNumber = env.BUILD_NUMBER as int
-// if (buildNumber > 1) milestone(buildNumber - 1)
-// milestone(buildNumber)
+
 def abortPreviousBuilds() {
   def currentJobName = env.JOB_NAME
   def currentBuildNumber = env.BUILD_NUMBER.toInteger()
@@ -24,7 +21,7 @@ def abortPreviousBuilds() {
       continue;
     }
 
-    build.doKill()
+    build.doKill()    //doTerm(),doKill(),doTerm()
   }
 }
 //停止之前相同的分支
@@ -80,10 +77,10 @@ pipeline {
               changeRequest()
           }
       parallel {
-        stage('python p1') {
+        stage('python') {
           //only pr triggering the build.
           
-          agent{label 'p1'}
+          agent{label 'pytest'}
           steps {
             
             pre_test()
