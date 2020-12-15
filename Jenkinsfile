@@ -4,7 +4,7 @@ node {
     git url: 'https://github.com/liuyq-617/TDengine.git'
 }
 
-// milestone to stop previous build.
+// milestone to stop previous build
 def buildNumber = env.BUILD_NUMBER as int
 if (buildNumber > 1) milestone(buildNumber - 1)
 milestone(buildNumber)
@@ -57,7 +57,10 @@ pipeline {
           agent{label 'p1'}
           steps {
             pre_test()
-            
+            sh '''
+            cd ${WKC}/tests
+            ./test-all.sh p1
+            date'''
           }
         }
         stage('test_b1') {
@@ -131,12 +134,7 @@ pipeline {
          agent{label "p2"}
          steps{
             pre_test()         
-            sh '''
-            date
-            cd ${WKC}/tests
-            ./test-all.sh p2
-            date
-            '''
+            
          }
        } 
         
