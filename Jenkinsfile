@@ -56,7 +56,7 @@ pipeline {
             print("go")
           }
         }
-      }
+      
     
       stage('Parallel test stage') {
       parallel {
