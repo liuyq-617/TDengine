@@ -13,26 +13,26 @@ node {
 def buildNumber = env.BUILD_NUMBER as int
 if (buildNumber > 1) milestone(buildNumber - 1)
 milestone(buildNumber)
-def abortPreviousBuilds() {
-  def currentJobName = env.JOB_NAME
-  def currentBuildNumber = env.BUILD_NUMBER.toInteger()
-  def jobs = Jenkins.instance.getItemByFullName(currentJobName)
-  def builds = jobs.getBuilds()
+// def abortPreviousBuilds() {
+//   def currentJobName = env.JOB_NAME
+//   def currentBuildNumber = env.BUILD_NUMBER.toInteger()
+//   def jobs = Jenkins.instance.getItemByFullName(currentJobName)
+//   def builds = jobs.getBuilds()
 
-  for (build in builds) {
-    if (!build.isBuilding()) {
-      continue;
-    }
+//   for (build in builds) {
+//     if (!build.isBuilding()) {
+//       continue;
+//     }
 
-    if (currentBuildNumber == build.getNumber().toInteger()) {
-      continue;
-    }
+//     if (currentBuildNumber == build.getNumber().toInteger()) {
+//       continue;
+//     }
 
-    build.doStop()
-  }
-}
-//停止之前相同的分支
-abortPreviousBuilds()
+//     build.doStop()
+//   }
+// }
+// //停止之前相同的分支
+// abortPreviousBuilds()
 def pre_test(){
     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh '''
@@ -71,16 +71,17 @@ pipeline {
   }
   
   stages {
-    when {
-    changeRequest()
-  }
+    
       stage('Parallel test stage') {
       parallel {
         stage('python p1') {
           
           agent{label 'p1'}
           steps {
-            abortPreviousBuilds()
+            when {
+              changeRequest()
+            }
+            // abortPreviousBuilds()
             pre_test()
             
           }
