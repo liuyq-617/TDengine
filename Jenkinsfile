@@ -56,6 +56,9 @@ pipeline {
           }
           agent{label 'p1'}
           steps {
+            def buildNumber = env.BUILD_NUMBER as int
+            if (buildNumber > 1) milestone(buildNumber - 1)
+            milestone(buildNumber)
             pre_test()
             sh '''
             cd ${WKC}/tests
