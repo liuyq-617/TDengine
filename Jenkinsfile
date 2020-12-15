@@ -75,12 +75,12 @@ pipeline {
       stage('Parallel test stage') {
       parallel {
         stage('python p1') {
-          
+          when {
+              changeRequest()
+          }
           agent{label 'p1'}
           steps {
-            when {
-              changeRequest()
-            }
+            
             // abortPreviousBuilds()
             pre_test()
             
