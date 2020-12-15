@@ -40,6 +40,11 @@ def pre_test(){
 }
 pipeline {
   agent none
+  option{
+    def buildNumber = env.BUILD_NUMBER as int
+            if (buildNumber > 1) milestone(buildNumber - 1)
+            milestone(buildNumber)
+  }
   environment{
       WK = '/var/lib/jenkins/workspace/TDinternal'
       WKC= '/var/lib/jenkins/workspace/TDinternal/community'
@@ -56,9 +61,7 @@ pipeline {
           }
           agent{label 'p1'}
           steps {
-            def buildNumber = env.BUILD_NUMBER as int
-            if (buildNumber > 1) milestone(buildNumber - 1)
-            milestone(buildNumber)
+            
             pre_test()
             sh '''
             cd ${WKC}/tests
