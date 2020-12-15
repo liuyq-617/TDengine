@@ -27,7 +27,7 @@ milestone(buildNumber)
 //     build.doKill()    //doTerm(),doKill(),doTerm()
 //   }
 // }
-// //停止之前相同的分支
+// //停止之前相同的分支。。
 // abortPreviousBuilds()
 def abort_previous(){
   def buildNumber = env.BUILD_NUMBER as int
