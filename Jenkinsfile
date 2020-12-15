@@ -157,21 +157,21 @@ pipeline {
             date'''
           }
         }
-       stage('python p2'){
-        //  when {
-        //       changeRequest()
-        //   }
-         agent{label "p2"}
-         steps{
-            print('ss')       
-            // sh '''
-            // date
-            // cd ${WKC}/tests
-            // ./test-all.sh p2
-            // date
-            // '''
-         }
-       } 
+      //  stage('python p2'){
+      //   //  when {
+      //   //       changeRequest()
+      //   //   }
+      //    agent{label "p2"}
+      //    steps{
+      //       print('ss')       
+      //       // sh '''
+      //       // date
+      //       // cd ${WKC}/tests
+      //       // ./test-all.sh p2
+      //       // date
+      //       // '''
+      //    }
+      //  } 
         
     }
   }
