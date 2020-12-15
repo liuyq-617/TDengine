@@ -159,7 +159,7 @@ pipeline {
         }
        stage('python p2'){
         //  when {
-        //       changeRequest()//
+        //       changeRequest()
         //   }
          agent{label "p2"}
          steps{
