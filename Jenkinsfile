@@ -27,7 +27,7 @@ def abortPreviousBuilds() {
     build.doTerm()
   }
 }
-//停止之前相同的分支sdfgsd
+//停止之前相同的分支
 abortPreviousBuilds()
 def abort_previous(){
   def buildNumber = env.BUILD_NUMBER as int
