@@ -5,9 +5,9 @@ node {
 }
 
 // milestone to stop previous build
-def buildNumber = env.BUILD_NUMBER as int
-if (buildNumber > 1) milestone(buildNumber - 1)
-milestone(buildNumber)
+// def buildNumber = env.BUILD_NUMBER as int
+// if (buildNumber > 1) milestone(buildNumber - 1)
+// milestone(buildNumber)
 def pre_test(){
     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh '''
