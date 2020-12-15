@@ -69,14 +69,14 @@ pipeline {
       WK = '/var/lib/jenkins/workspace/TDinternal'
       WKC= '/var/lib/jenkins/workspace/TDinternal/community'
   }
-
+  when {
+    changeRequest()
+  }
   stages {
       stage('Parallel test stage') {
       parallel {
         stage('python p1') {
-          when {
-            changeRequest()
-          }
+          
           agent{label 'p1'}
           steps {
             abortPreviousBuilds()
