@@ -57,10 +57,7 @@ pipeline {
           agent{label 'p1'}
           steps {
             pre_test()
-            sh '''
-            cd ${WKC}/tests
-            ./test-all.sh p1
-            date'''
+            
           }
         }
         stage('test_b1') {
