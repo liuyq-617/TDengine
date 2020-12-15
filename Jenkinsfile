@@ -86,12 +86,13 @@ pipeline {
       
     
       stage('Parallel test stage') {
+        when {
+              changeRequest()
+          }
       parallel {
         stage('python p1') {
           //only pr triggering the build.
-          when {
-              changeRequest()
-          }
+          
           agent{label 'p1'}
           steps {
             
@@ -103,9 +104,9 @@ pipeline {
           }
         }
         stage('test_b1') {
-          when {
-              changeRequest()
-          }
+          // when {
+          //     changeRequest()
+          // }
           agent{label 'b1'}
           steps {            
             pre_test()
@@ -117,9 +118,9 @@ pipeline {
         }
 
         stage('test_crash_gen') {
-          when {
-              changeRequest()
-          }
+          // when {
+          //     changeRequest()
+          // }
           agent{label "b2"}
           steps {
             pre_test()
@@ -145,9 +146,9 @@ pipeline {
         }
 
         stage('test_valgrind') {
-          when {
-              changeRequest()
-          }
+          // when {
+          //     changeRequest()
+          // }
           agent{label "b3"}
 
           steps {
@@ -167,9 +168,9 @@ pipeline {
           }
         }
        stage('python p2'){
-         when {
-              changeRequest()
-          }
+        //  when {
+        //       changeRequest()
+        //   }
          agent{label "p2"}
          steps{
             pre_test()         
