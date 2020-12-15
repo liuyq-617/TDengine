@@ -5,7 +5,7 @@ node {
     git url: 'https://github.com/liuyq-617/TDengine.git'
 }
 
-// milestone to stop previous build。。。
+// milestone to stop previous build。。。sss
 // def buildNumber = env.BUILD_NUMBER as int
 // if (buildNumber > 1) milestone(buildNumber - 1)
 // milestone(buildNumber)
