@@ -79,8 +79,6 @@ pipeline {
           }
           agent{label 'p1'}
           steps {
-            
-            // abortPreviousBuilds()
             pre_test()
             sh '''
             cd ${WKC}/tests
@@ -88,8 +86,88 @@ pipeline {
             date'''
           }
         }
+        stage('test_b1') {
+          when {
+              changeRequest()
+          }
+          agent{label 'b1'}
+          steps {            
+            pre_test()
+            sh '''
+            cd ${WKC}/tests
+            ./test-all.sh b1
+            date'''
+          }
+        }
+
+        stage('test_crash_gen') {
+          when {
+              changeRequest()
+          }
+          agent{label "b2"}
+          steps {
+            pre_test()
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh '''
+                cd ${WKC}/tests/pytest
+                ./crash_gen.sh -a -p -t 4 -s 2000
+                '''
+            }
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh '''
+                cd ${WKC}/tests/pytest
+                ./handle_crash_gen_val_log.sh
+                '''
+            }
+            sh '''
+            date
+            cd ${WKC}/tests
+            ./test-all.sh b2
+            date
+            '''
+          }
+        }
+
+        stage('test_valgrind') {
+          when {
+              changeRequest()
+          }
+          agent{label "b3"}
+
+          steps {
+            pre_test()
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh '''
+                cd ${WKC}/tests/pytest
+                ./valgrind-test.sh 2>&1 > mem-error-out.log
+                ./handle_val_log.sh
+                '''
+            }           
+            sh '''
+            date
+            cd ${WKC}/tests
+            ./test-all.sh b3
+            date'''
+          }
+        }
+       stage('python p2'){
+         when {
+              changeRequest()
+          }
+         agent{label "p2"}
+         steps{
+            pre_test()         
+            sh '''
+            date
+            cd ${WKC}/tests
+            ./test-all.sh p2
+            date
+            '''
+         }
+       } 
         
     }
   }
-  } 
+  }
+   
 }
