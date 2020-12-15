@@ -4,7 +4,7 @@ node {
     git url: 'https://github.com/liuyq-617/TDengine.git'
 }
 
-// execute this before anything else, including requesting any time on an agent
+// execute this before anything else, including requesting any time on an agent test 
 // if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
 //   print "INFO: Build skipped due to trigger being Branch Indexing"
 //   currentBuild.result = 'success skip' // optional, gives a better hint to the user that it's been skipped, rather than the default which shows it's successful
@@ -83,7 +83,10 @@ pipeline {
             
             // abortPreviousBuilds()
             pre_test()
-            
+            sh '''
+            cd ${WKC}/tests
+            ./test-all.sh p1
+            date'''
           }
         }
         
