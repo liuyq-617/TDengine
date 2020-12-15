@@ -69,10 +69,11 @@ pipeline {
       WK = '/var/lib/jenkins/workspace/TDinternal'
       WKC= '/var/lib/jenkins/workspace/TDinternal/community'
   }
-  when {
+  
+  stages {
+    when {
     changeRequest()
   }
-  stages {
       stage('Parallel test stage') {
       parallel {
         stage('python p1') {
