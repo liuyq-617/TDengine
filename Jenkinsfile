@@ -163,7 +163,7 @@ pipeline {
         //   }
          agent{label "p2"}
          steps{
-            pre_test()         
+            print('ss')       
             // sh '''
             // date
             // cd ${WKC}/tests
