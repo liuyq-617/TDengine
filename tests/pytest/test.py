@@ -11,7 +11,7 @@
 ###################################################################
 # install pip
 # pip install src/connector/python/linux/python2/sdfsdf
-
+#ssss
 # -*- coding: utf-8 -*-
 import sys
 import getopt
