@@ -9,15 +9,26 @@ node {
 // def buildNumber = env.BUILD_NUMBER as int
 // if (buildNumber > 1) milestone(buildNumber - 1)
 // milestone(buildNumber)
-build.getProject()._getRuns().iterator().each{ run ->
-            def exec = run.getExecutor()
-            //if the run is not a current build and it has executor (running) then stop it
-            if( run!=build && exec!=null ){
-              //prepare the cause of interruption
-              def cause = { "interrupted by build #${build.getId()}" as String } as CauseOfInterruption 
-              exec.interrupt(Result.ABORTED, cause)
-          }
-        }
+def abortPreviousBuilds() {
+  def currentJobName = env.JOB_NAME
+  def currentBuildNumber = env.BUILD_NUMBER.toInteger()
+  def jobs = Jenkins.instance.getItemByFullName(currentJobName)
+  def builds = jobs.getBuilds()
+
+  for (build in builds) {
+    if (!build.isBuilding()) {
+      continue;
+    }
+
+    if (currentBuildNumber == build.getNumber().toInteger()) {
+      continue;
+    }
+
+    build.doStop()
+  }
+}
+//停止之前相同的分支sdfgsd
+abortPreviousBuilds()
 def abort_previous(){
   def buildNumber = env.BUILD_NUMBER as int
   if (buildNumber > 1) milestone(buildNumber - 1)
