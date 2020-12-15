@@ -50,7 +50,7 @@ pipeline {
       stage('Parallel test stage') {
       parallel {
         stage('python p1') {
-          //only pr triggering the build
+          //only pr triggering the build.
           when {
               changeRequest()
           }
