@@ -5,30 +5,27 @@ node {
     git url: 'https://github.com/liuyq-617/TDengine.git'
 }
 
-def buildNumber = env.BUILD_NUMBER as int
-if (buildNumber > 1) milestone(buildNumber - 1)
-milestone(buildNumber)
 
-// def abortPreviousBuilds() {
-//   def currentJobName = env.JOB_NAME
-//   def currentBuildNumber = env.BUILD_NUMBER.toInteger()
-//   def jobs = Jenkins.instance.getItemByFullName(currentJobName)
-//   def builds = jobs.getBuilds()
+def abortPreviousBuilds() {
+  def currentJobName = env.JOB_NAME
+  def currentBuildNumber = env.BUILD_NUMBER.toInteger()
+  def jobs = Jenkins.instance.getItemByFullName(currentJobName)
+  def builds = jobs.getBuilds()
 
-//   for (build in builds) {
-//     if (!build.isBuilding()) {
-//       continue;
-//     }
+  for (build in builds) {
+    if (!build.isBuilding()) {
+      continue;
+    }
 
-//     if (currentBuildNumber == build.getNumber().toInteger()) {
-//       continue;
-//     }
+    if (currentBuildNumber == build.getNumber().toInteger()) {
+      continue;
+    }
 
-//     build.doKill()    //doTerm(),doKill(),doTerm()
-//   }
-// }
-// //停止之前相同的分支。。
-// abortPreviousBuilds()
+    build.doKill()    //doTerm(),doKill(),doTerm()
+  }
+}
+//停止之前相同的分支。。
+abortPreviousBuilds()
 def abort_previous(){
   def buildNumber = env.BUILD_NUMBER as int
   if (buildNumber > 1) milestone(buildNumber - 1)
