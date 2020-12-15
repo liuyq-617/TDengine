@@ -3,35 +3,11 @@ properties([pipelineTriggers([githubPush()])])
 node {
     git url: 'https://github.com/liuyq-617/TDengine.git'
 }
-// execute this before anything else, including requesting any time on an agent test 
-// if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
-//   print "INFO: Build skipped due to trigger being Branch Indexing"
-//   currentBuild.result = 'success skip' // optional, gives a better hint to the user that it's been skipped, rather than the default which shows it's successful
-//   return
-// }
+
+// milestone to stop previous build
 def buildNumber = env.BUILD_NUMBER as int
 if (buildNumber > 1) milestone(buildNumber - 1)
 milestone(buildNumber)
-// def abortPreviousBuilds() {
-//   def currentJobName = env.JOB_NAME
-//   def currentBuildNumber = env.BUILD_NUMBER.toInteger()
-//   def jobs = Jenkins.instance.getItemByFullName(currentJobName)
-//   def builds = jobs.getBuilds()
-
-//   for (build in builds) {
-//     if (!build.isBuilding()) {
-//       continue;
-//     }
-
-//     if (currentBuildNumber == build.getNumber().toInteger()) {
-//       continue;
-//     }
-
-//     build.doStop()
-//   }
-// }
-// //停止之前相同的分支
-// abortPreviousBuilds()
 def pre_test(){
     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh '''
@@ -74,6 +50,7 @@ pipeline {
       stage('Parallel test stage') {
       parallel {
         stage('python p1') {
+          //only pr triggering the build
           when {
               changeRequest()
           }
