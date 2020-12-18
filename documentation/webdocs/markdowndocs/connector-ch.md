@@ -1,4 +1,4 @@
-# 连接器
+# 连接器tset
 
 TDengine提供了丰富的应用程序开发接口，其中包括C/C++、JAVA、Python、RESTful、Go等，便于用户快速开发应用。
 
